@@ -1,0 +1,16 @@
+class Solution {
+    public int smallestRepunitDivByK(int k) {
+        HashSet<Integer> nums = new HashSet<>();
+        int cur = 0, len = 0;
+        boolean cycle = false;
+        while(!cycle){
+            cur = cur * 10 + 1;
+            len++;
+            cur %= k;
+            if(cur == 0) return len;
+            if(nums.contains(cur)) cycle = true;
+            nums.add(cur);
+        }
+        return -1;
+    }
+}
