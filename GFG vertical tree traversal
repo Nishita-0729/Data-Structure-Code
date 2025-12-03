@@ -1,0 +1,58 @@
+/*
+class Node {
+    int data;
+    Node left;
+    Node right;
+
+    Node(int data) {
+        this.data = data;
+        left = null;
+        right = null;
+    }
+}
+*/
+
+class Solution {
+    class Pair{
+            Node node;
+            int hd;
+            
+            Pair(Node n,int h){
+                node=n;
+                hd=h;
+                
+            }
+        }
+    public ArrayList<ArrayList<Integer>> verticalOrder(Node root) {
+        
+        ArrayList<ArrayList<Integer>> ans=new ArrayList<>();
+        if (root==null) return ans;
+        
+        TreeMap<Integer,ArrayList<Integer>> map=new TreeMap<>();
+        Queue<Pair> q=new LinkedList<>();
+        
+        q.offer(new Pair(root,0));
+        
+        while(!q.isEmpty()){
+            Pair p=q.poll();
+            Node n=p.node;
+            int val=p.hd;
+            
+            if (!map.containsKey(val)) {
+                map.put(val, new ArrayList<>());
+            }
+            map.get(val).add(n.data);
+            if(n.left!=null){
+                q.offer(new Pair(n.left,val-1));
+            }
+            if(n.right!=null){
+                q.offer(new Pair(n.right,val+1));
+            }
+        }
+        for (ArrayList<Integer> arr : map.values()) {
+            ans.add(arr);
+        }
+
+        return ans;
+    }
+}
