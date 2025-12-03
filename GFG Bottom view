@@ -1,0 +1,49 @@
+/*
+class Node {
+    int data;
+    Node left, right;
+
+    Node(int val) {
+        this.data = val;
+        this.left = null;
+        this.right = null;
+    }
+}
+*/
+class Solution {
+
+    class Pair {
+        Node node;
+        int hd;
+        Pair(Node n, int h) {
+            node = n;
+            hd = h;
+        }
+    }
+
+    public ArrayList<Integer> bottomView(Node root) {
+        ArrayList<Integer> ans = new ArrayList<>();
+        if (root == null) return ans;
+
+        TreeMap<Integer, Integer> map = new TreeMap<>();
+        Queue<Pair> q = new LinkedList<>();
+        q.offer(new Pair(root, 0));
+
+        while (!q.isEmpty()) {
+            Pair p = q.poll();
+            Node n = p.node;
+            int hd = p.hd;
+
+            map.put(hd, n.data);
+
+            if (n.left != null) q.offer(new Pair(n.left, hd - 1));
+            if (n.right != null) q.offer(new Pair(n.right, hd + 1));
+        }
+
+        for (int val : map.values()) {
+            ans.add(val);
+        }
+
+        return ans;
+    }
+}
