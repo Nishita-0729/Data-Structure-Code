@@ -1,0 +1,30 @@
+class Solution {
+    private int index = 0;
+
+    public String decodeString(String s) {
+        StringBuilder res = new StringBuilder();
+        int k = 0;
+
+        while (index < s.length()) {
+            char ch = s.charAt(index);
+
+            if (Character.isDigit(ch)) {
+                k = k * 10 + (ch - '0');
+            } else if (ch == '[') {
+                index++; 
+                String nestedString = decodeString(s);
+                while (k > 0) {
+                    res.append(nestedString);
+                    k--;
+                }
+                k = 0;
+            } else if (ch == ']') {
+                return res.toString();
+            } else {
+                res.append(ch);
+            }
+            index++;
+        }
+        return res.toString();
+    }
+}
